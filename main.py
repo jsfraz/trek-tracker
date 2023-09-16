@@ -1,9 +1,31 @@
 import serial
 import pynmea2
-import json
+from gnss_data import GNSSData
+import socketio
+import time
 
-# Define the serial port and settings with a baud rate of 115200
-ser = serial.Serial('/dev/serial0', baudrate=115200, timeout=1)
+SERIAL_PORT = '/dev/serial0'
+BAUD_RATE = 115200
+SERIAL_TIMEOUT = 1
+SOCKETIO_SERVER = 'http://192.168.1.109:8080'
+SOCKETIO_RECCONECT_DELAY = 1
+SOCKETIO_INITIAL_CONNECT_DELAY = 10
+
+# Define the serial port and settings
+ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
+# Connect to Socket.IO server
+sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
+canConnect = False
+while canConnect == False:
+
+    try:
+        sio.connect(SOCKETIO_SERVER)
+        canConnect = True
+    except Exception as e:
+        print('Unable to connect to ' + SOCKETIO_SERVER + ':', e)
+        time.sleep(SOCKETIO_INITIAL_CONNECT_DELAY)
+
+print('Connected to ' + SOCKETIO_SERVER + '!')
 
 try:
 
@@ -22,26 +44,21 @@ try:
                     latitude = msg.latitude
                     longitude = msg.longitude
                     speed_knots = msg.spd_over_grnd
-                    timestamp = msg.datetime.strftime('%Y-%m-%d %H:%M:%S.%f')
+                    timestamp = msg.datetime.utcnow().isoformat()
                     
                     # Convert speed from knots to km/h
                     speed_kmph = float(speed_knots) * 1.852  # 1 knot = 1.852 km/h
                     
-                    # Create a dictionary with the extracted information
-                    data_dict = {
-                        "latitude": latitude,
-                        "longitude": longitude,
-                        "speed": speed_kmph,
-                        "timestamp": timestamp,
-                    }
-                    
-                    # Print the JSON data
-                    print(json.dumps(data_dict, indent=4))
+                    # Create GNSSData instance
+                    data = GNSSData(latitude, longitude, speed_kmph, timestamp)
+                    # Send data to Socket.IO server
+                    print(data.__dict__)
+                    sio.emit('sendCurrent', data.__dict__)
                 
-            except pynmea2.ParseError as e:
-                print(f"Failed to parse NMEA sentence: {data}")
+            except Exception as e:
+                print('Error:', e)
         
 except KeyboardInterrupt:
     # Handle Ctrl+C to exit the loop gracefully
     ser.close()
-    print("\nSerial port closed.")
+    print('\nSerial port closed.')
