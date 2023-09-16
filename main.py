@@ -13,8 +13,19 @@ SOCKETIO_INITIAL_CONNECT_DELAY = 10
 
 # Define the serial port and settings
 ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
+
 # Connect to Socket.IO server
 sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
+
+# Define event handlers
+@sio.on('connect')
+def on_connect():
+    print('Connected to the server.')
+
+@sio.on('disconnect')
+def on_disconnect():
+    print('Disconnected from the server.')
+
 canConnect = False
 while canConnect == False:
 
@@ -24,8 +35,6 @@ while canConnect == False:
     except Exception as e:
         print('Unable to connect to ' + SOCKETIO_SERVER + ':', e)
         time.sleep(SOCKETIO_INITIAL_CONNECT_DELAY)
-
-print('Connected to ' + SOCKETIO_SERVER + '!')
 
 try:
 
@@ -52,7 +61,7 @@ try:
                     # Create GNSSData instance
                     data = GNSSData(latitude, longitude, speed_kmph, timestamp)
                     # Send data to Socket.IO server
-                    print(data.__dict__)
+                    # print(data.__dict__)
                     sio.emit('sendCurrent', data.__dict__)
                 
             except Exception as e:
