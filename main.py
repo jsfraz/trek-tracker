@@ -4,15 +4,12 @@ from gnss_data import GNSSData
 import socketio
 import time
 
-SERIAL_PORT = '/dev/serial0'
-BAUD_RATE = 115200
-SERIAL_TIMEOUT = 1
 SOCKETIO_SERVER = 'http://192.168.1.109:8080'
 SOCKETIO_RECCONECT_DELAY = 1
 SOCKETIO_INITIAL_CONNECT_DELAY = 10
-
-# Define the serial port and settings
-ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
+SERIAL_PORT = '/dev/serial0'
+BAUD_RATE = 115200
+SERIAL_TIMEOUT = 1
 
 # Connect to Socket.IO server
 sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
@@ -35,6 +32,9 @@ while canConnect == False:
     except Exception as e:
         print(e)
         time.sleep(SOCKETIO_INITIAL_CONNECT_DELAY)
+
+# Define the serial port and settings
+ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
 
 try:
 
@@ -59,10 +59,10 @@ try:
                     speed_kmph = float(speed_knots) * 1.852  # 1 knot = 1.852 km/h
                     
                     # Create GNSSData instance
-                    data = GNSSData(latitude, longitude, speed_kmph, timestamp)
+                    gnss_data = GNSSData(latitude, longitude, speed_kmph, timestamp)
                     # Send data to Socket.IO server
-                    # print(data.__dict__)
-                    sio.emit('sendCurrent', data.__dict__)
+                    # print(gnss_data.__.dict__)
+                    sio.emit('sendCurrent', gnss_data.__dict__)
                 
             except Exception as e:
                 print('Error:', e)
