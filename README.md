@@ -2,7 +2,9 @@
 
 ## Install requirements
 
+```bash
 pip3 install requirements.txt
+```
 
 ## Serial console settings
 
