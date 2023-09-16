@@ -33,7 +33,7 @@ while canConnect == False:
         sio.connect(SOCKETIO_SERVER)
         canConnect = True
     except Exception as e:
-        print('Unable to connect to ' + SOCKETIO_SERVER + ':', e)
+        print(e)
         time.sleep(SOCKETIO_INITIAL_CONNECT_DELAY)
 
 try:
