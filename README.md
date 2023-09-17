@@ -1,4 +1,4 @@
-# Trek client
+# Trek tracker
 
 ## Install requirements
 
