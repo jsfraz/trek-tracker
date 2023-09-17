@@ -27,6 +27,7 @@ canConnect = False
 while canConnect == False:
 
     try:
+        # TODO pass the API key as parameter
         sio.connect(SOCKETIO_SERVER)
         canConnect = True
     except Exception as e:
