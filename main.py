@@ -4,7 +4,7 @@ from gnss_data import GNSSData
 import socketio
 import time
 
-SOCKETIO_SERVER = 'http://192.168.1.109:8080'
+SOCKETIO_URL = 'http://192.168.1.107:8080?apiKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTUzOTUwOTcsIm5iZiI6MTY5NTM5NTA5Nywic3ViIjo0fQ.NCCdXFoQiiUpf614y5G80Zy3YEMp_fnqbKet9vivXyQ'
 SOCKETIO_RECCONECT_DELAY = 1
 SOCKETIO_INITIAL_CONNECT_DELAY = 10
 SERIAL_PORT = '/dev/serial0'
@@ -15,12 +15,16 @@ SERIAL_TIMEOUT = 1
 sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
 
 # Define event handlers
-@sio.on('connect')
-def on_connect():
+@sio.event
+def connect():
     print('Connected to the server.')
 
-@sio.on('disconnect')
-def on_disconnect():
+@sio.event
+def connect_error(data):
+    print('The connection failed: ' + data)
+
+@sio.event
+def disconnect():
     print('Disconnected from the server.')
 
 canConnect = False
@@ -28,7 +32,7 @@ while canConnect == False:
 
     try:
         # TODO pass the API key as parameter
-        sio.connect(SOCKETIO_SERVER)
+        sio.connect(SOCKETIO_URL)
         canConnect = True
     except Exception as e:
         print(e)
