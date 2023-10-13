@@ -8,7 +8,7 @@ import subprocess
 from threading import Thread
 
 PIN_SHUTDOWN_BUTTON = 5     # on/off pin
-PIN_PIEZO = 11      # piezo pin
+PIN_PIEZO = 12      # piezo pin
 SOCKETIO_URL = 'http://192.168.1.107:8080?apiKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTcxMDc2NjYsIm5iZiI6MTY5NzEwNzY2Niwic3ViIjozNn0.IhiW0vabOeIQd9fyuKtI-rfxAn8Ect8FGtC00iYg4do'
 SOCKETIO_RECCONECT_DELAY = 1
 SOCKETIO_INITIAL_CONNECT_DELAY = 10
