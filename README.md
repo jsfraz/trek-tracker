@@ -1,4 +1,6 @@
-# Trek tracker
+# trek-tracker
+
+Trek tracker for tracking your motorcycles or whatever.
 
 ## Install requirements
 
