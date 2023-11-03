@@ -1,0 +1,1 @@
+sudo pip3 install pyserial pynmea2 python-socketio==4.6.1

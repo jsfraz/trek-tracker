@@ -1,0 +1,6 @@
+sudo systemctl stop trek-tracker
+CACHE="/usr/bin/trek-tracker/__pycache__/"
+if test -e $CACHE; then
+    sudo rm -r $CACHE
+fi
+sudo pip3 uninstall -y pyserial pynmea2 python-socketio==4.6.1

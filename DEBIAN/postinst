@@ -1,0 +1,2 @@
+sudo systemctl enable trek-tracker
+sudo systemctl start trek-tracker
