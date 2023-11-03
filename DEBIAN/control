@@ -2,5 +2,5 @@ Package: trek-tracker
 Version: 1.0
 Architecture: all
 Maintainer: Josef Ráž <josefraz@seznam.cz>
-Depends: python3, python3-pip
+Depends: python3, python3-pip, nano
 Description: Trek tracker for tracking your motorcycles or whatever
