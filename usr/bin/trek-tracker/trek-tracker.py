@@ -6,20 +6,19 @@ import time
 import RPi.GPIO as GPIO
 import subprocess
 from threading import Thread
+import configparser
 
+# server
+SOCKETIO_URL = ''
+SOCKETIO_RECCONECT_DELAY = 1
+SOCKETIO_INITIAL_RECONNECT_DELAY = 10
+# pins
 PIN_SHUTDOWN_BUTTON = 5     # on/off pin
 PIN_PIEZO = 40      # piezo pin
-SOCKETIO_URL = 'http://192.168.193.3:8080?apiKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTcxMDc2NjYsIm5iZiI6MTY5NzEwNzY2Niwic3ViIjozNn0.IhiW0vabOeIQd9fyuKtI-rfxAn8Ect8FGtC00iYg4do'
-SOCKETIO_RECCONECT_DELAY = 1
-SOCKETIO_INITIAL_CONNECT_DELAY = 10
+# other
 SERIAL_PORT = '/dev/serial0'
 BAUD_RATE = 115200
 SERIAL_TIMEOUT = 1
-
-# pin setup
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(PIN_SHUTDOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(PIN_PIEZO, GPIO.OUT)
 
 # beep using piezo
 def beep(count, duration):
@@ -36,6 +35,36 @@ def beep(count, duration):
                 time.sleep(0.3)
     except Exception as e:
         print(e)
+
+# config
+configName = 'trek-tracker'
+config = configparser.ConfigParser()
+try:
+    config.read('/etc/trek-tracker/trek-tracker.conf')
+    # https
+    securityScheme = 'http'
+    if config[configName]['https'] == 'True' or config[configName]['https'] == 'true':
+        securityScheme = 'https'
+    # server
+    server = config[configName]['ServerAddress']
+    # port
+    port = int(config[configName]['ServerPort'])
+    # API key
+    apiKey = config[configName]['ApiKey']
+    # constants
+    SOCKETIO_URL = securityScheme + '://' + server + ':' + str(port) + '?apiKey=' + apiKey
+    SOCKETIO_RECCONECT_DELAY = int(config[configName]['ReconnectDelay'])
+    SOCKETIO_INITIAL_RECONNECT_DELAY = int(config[configName]['InitialReconnectDelay'])
+    BAUD_RATE = int(config[configName]['BaudRate'])
+except Exception as e:
+    print(e)
+    beep(3, 1)
+    exit(1)
+
+# pin setup
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(PIN_SHUTDOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(PIN_PIEZO, GPIO.OUT)
 
 # Socket.IO server
 sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
@@ -86,43 +115,39 @@ while canConnect == False:
         canConnect = True
     except Exception as e:
         print(e)
-        time.sleep(SOCKETIO_INITIAL_CONNECT_DELAY)
+        time.sleep(SOCKETIO_INITIAL_RECONNECT_DELAY)
 
 # Define the serial port and settings
 ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
 
-try:
-
-    while True:
+while True:
+    try:
         # Read data from the serial port
         data = ser.readline().decode('utf-8').strip()
         
         # Check if data is not empty
         if data:
-            try:
-                # Parse the NMEA sentence
-                msg = pynmea2.parse(data)
+            # Parse the NMEA sentence
+            msg = pynmea2.parse(data)
                 
-                if isinstance(msg, pynmea2.RMC):
-                    # Extract latitude, longitude, speed, and timestamp
-                    latitude = msg.latitude
-                    longitude = msg.longitude
-                    speed_knots = msg.spd_over_grnd
-                    timestamp = msg.datetime.utcnow().isoformat()
-                    
-                    # Convert speed from knots to km/h
-                    speed_kmph = float(speed_knots) * 1.852  # 1 knot = 1.852 km/h
-                    
-                    # Create GNSSData instance
-                    gnss_data = GNSSData(latitude, longitude, speed_kmph, timestamp)
-                    # Send data to Socket.IO server
-                    # print(gnss_data.__.dict__)
-                    sio.emit('sendCurrent', gnss_data.__dict__)
+            if isinstance(msg, pynmea2.RMC):
+                # Extract latitude, longitude, speed, and timestamp
+                latitude = msg.latitude
+                longitude = msg.longitude
+                speed_knots = msg.spd_over_grnd
+                timestamp = msg.datetime.utcnow().isoformat()
                 
-            except Exception as e:
-                print('Error:', e)
-        
-except KeyboardInterrupt:
-    # Handle Ctrl+C to exit the loop gracefully
-    ser.close()
-    print('\nSerial port closed.')
+                # Convert speed from knots to km/h
+                speed_kmph = float(speed_knots) * 1.852  # 1 knot = 1.852 km/h
+                
+                # Create GNSSData instance
+                gnss_data = GNSSData(latitude, longitude, speed_kmph, timestamp)
+                # Send data to Socket.IO server
+                print(gnss_data.__dict__)
+                sio.emit('sendCurrent', gnss_data.__dict__)
+            
+        else:
+            print('No data!')
+
+    except Exception as e:
+        print('Error:', e)

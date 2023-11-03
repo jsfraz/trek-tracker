@@ -2,6 +2,7 @@
 
 Trek tracker for tracking your motorcycles or whatever.
 
+<!--
 ## Install requirements
 
 ```bash
@@ -23,3 +24,4 @@ Would you like the serial port hardware to be enabled?
 Yes
 Ok
 ```
+-->
