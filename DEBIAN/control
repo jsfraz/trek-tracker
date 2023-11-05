@@ -1,5 +1,5 @@
 Package: trek-tracker
-Version: 1.0
+Version: 1.0.0
 Architecture: all
 Maintainer: Josef Ráž <josefraz@seznam.cz>
 Depends: python3, python3-pip, nano

@@ -1,3 +1,4 @@
+#!/bin/bash
 # stop service
 sudo systemctl stop trek-tracker
 # delete __pycache__/ if exists
