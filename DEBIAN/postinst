@@ -1,3 +1,4 @@
+#!/bin/bash
 # enable service
 sudo systemctl enable trek-tracker
 # configure tracker (https://stackoverflow.com/a/3232082/19371130)
