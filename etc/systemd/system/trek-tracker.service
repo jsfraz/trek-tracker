@@ -1,0 +1,10 @@
+[Unit]
+Description=trek-tracker
+After=network.target
+
+[Service]
+ExecStart=python3 /usr/bin/trek-tracker/trek-tracker.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

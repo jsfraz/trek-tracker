@@ -1,0 +1,10 @@
+#!/bin/bash
+# stop service
+sudo systemctl stop trek-tracker
+# delete __pycache__/ if exists
+CACHE="/usr/bin/trek-tracker/__pycache__/"
+if test -e $CACHE; then
+    sudo rm -r $CACHE
+fi
+# uninstall python dependencies
+sudo pip3 uninstall -y pyserial pynmea2 python-socketio==4.6.1 configparser
