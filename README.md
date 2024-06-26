@@ -5,7 +5,7 @@ Trek tracker for tracking your motorcycles or whatever.
 ## Building
 
 ```bash
-dpkg-deb -b . trek-tracker-latest.deb
+dpkg-deb -b . trek-tracker-1.0.0.deb
 ```
 
 ## Install requirements
