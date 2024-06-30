@@ -1,10 +1,10 @@
 #!/bin/bash
-# stop service
+# Stop service
 sudo systemctl stop trek-tracker
-# delete trek directory if exists
+# Delete trek directory if exists
 DIR="/usr/bin/trek-tracker/"
 if test -e $DIR; then
     sudo rm -r $DIR
 fi
-# uninstall python dependencies
+# Uninstall python dependencies
 sudo pip3 uninstall -y pyserial pynmea2 python-socketio==4.6.1 configparser
