@@ -1,3 +1,4 @@
+from datetime import timezone
 import serial
 import pynmea2
 from gnss_data import GNSSData
@@ -43,7 +44,7 @@ try:
     config.read('/etc/trek-tracker/trek-tracker.conf')
     # https
     securityScheme = 'http'
-    if config[configName]['https'] == 'True' or config[configName]['https'] == 'true':
+    if config[configName]['https'].lower() == 'true':
         securityScheme = 'https'
     # server
     server = config[configName]['ServerAddress']
@@ -69,7 +70,7 @@ GPIO.setup(PIN_PIEZO, GPIO.OUT)
 # Socket.IO server
 sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
 
-# Define event handlers
+# define event handlers
 @sio.event
 def connect():
     print('Connected to the server.')
@@ -135,7 +136,7 @@ while True:
                 latitude = msg.latitude
                 longitude = msg.longitude
                 speed_knots = msg.spd_over_grnd
-                timestamp = msg.datetime.utcnow().isoformat()
+                timestamp = msg.datetime.now(timezone.utc).isoformat()
                 
                 # Convert speed from knots to km/h
                 speed_kmph = float(speed_knots) * 1.852  # 1 knot = 1.852 km/h

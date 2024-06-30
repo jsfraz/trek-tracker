@@ -1,2 +1,4 @@
 usr/bin/trek-tracker/__pycache__/
+.pytest_cache/
 *.deb
+.env.test
