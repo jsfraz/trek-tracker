@@ -7,5 +7,3 @@ fi
 # Enable serial port and disable serial login https://forums.raspberrypi.com/viewtopic.php?t=21632
 echo Enabling serial port.
 sudo raspi-config nonint do_serial 2
-# Install python dependencies
-sudo pip3 install pyserial pynmea2 python-socketio==4.6.1 configparser

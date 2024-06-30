@@ -2,5 +2,6 @@ pyserial
 pynmea2
 python-socketio==4.6.1      # Last version to support Socket.IO v2 (https://pypi.org/project/python-socketio/)
 configparser
+# Developer dependencies
 pytest
 python-dotenv
