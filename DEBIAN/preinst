@@ -1,11 +1,9 @@
 #!/bin/bash
-# check if raspi-config exists
+# Check if raspi-config exists
 if test ! -e /usr/bin/raspi-config; then
     echo -e "\e[41mraspi-config not found\e[0m"
     exit 1
 fi
-# enable serial port and disable serial login https://forums.raspberrypi.com/viewtopic.php?t=21632
+# Enable serial port and disable serial login https://forums.raspberrypi.com/viewtopic.php?t=21632
 echo Enabling serial port.
 sudo raspi-config nonint do_serial 2
-# install python dependencies
-sudo pip3 install pyserial pynmea2 python-socketio==4.6.1 configparser

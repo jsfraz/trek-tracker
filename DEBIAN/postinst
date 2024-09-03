@@ -1,7 +1,7 @@
 #!/bin/bash
-# enable service
+# Enable service
 sudo systemctl enable trek-tracker
-# configure tracker (https://stackoverflow.com/a/3232082/19371130)
+# Configure tracker (https://stackoverflow.com/a/3232082/19371130)
 read -r -p "Do you wish to configure the tracker now? [y/N] " response
 case "$response" in
     [yY][eE][sS]|[yY]) 
@@ -11,7 +11,7 @@ case "$response" in
         echo Installation complete. Be sure to restart to enable serial port.
         ;;
 esac
-# restart
+# Restart
 echo Reboot is required for finishing the installation and enabling serial port.
 read -r -p "Do you wish to reboot now? [y/N] " response
 case "$response" in

@@ -1,3 +1,4 @@
+from datetime import timezone
 import serial
 import pynmea2
 from gnss_data import GNSSData
@@ -8,24 +9,25 @@ import subprocess
 from threading import Thread
 import configparser
 
-# server
+# Server
 SOCKETIO_URL = ''
 SOCKETIO_RECCONECT_DELAY = 1
 SOCKETIO_INITIAL_RECONNECT_DELAY = 10
-# pins
-PIN_SHUTDOWN_BUTTON = 5     # on/off pin
-PIN_PIEZO = 40      # piezo pin
-# other
+# Pins
+PIN_SHUTDOWN_BUTTON = 5     # On/Off pin
+PIN_PIEZO = 40      # Piezo pin
+# Other
 SERIAL_PORT = '/dev/serial0'
 BAUD_RATE = 115200
 SERIAL_TIMEOUT = 1
 
-# beep using piezo
 def beep(count, duration):
+    """Beep using piezo."""
+
     try:
-        pin = GPIO.PWM(PIN_PIEZO, 520)      # pwm instance
+        pin = GPIO.PWM(PIN_PIEZO, 520)      # PWM instance
         for x in range(count):
-            pin.start(50)       # start with duty cycle 50
+            pin.start(50)       # Start with duty cycle 50
             pin.ChangeFrequency(520)
             GPIO.output(PIN_PIEZO, GPIO.HIGH)
             time.sleep(duration)
@@ -36,22 +38,22 @@ def beep(count, duration):
     except Exception as e:
         print(e)
 
-# config
+# Config
 configName = 'trek-tracker'
 config = configparser.ConfigParser()
 try:
     config.read('/etc/trek-tracker/trek-tracker.conf')
-    # https
+    # HTTPS
     securityScheme = 'http'
-    if config[configName]['https'] == 'True' or config[configName]['https'] == 'true':
+    if config[configName]['https'].lower() == 'true':
         securityScheme = 'https'
-    # server
+    # Server
     server = config[configName]['ServerAddress']
-    # port
+    # Port
     port = int(config[configName]['ServerPort'])
     # API key
     apiKey = config[configName]['ApiKey']
-    # constants
+    # Constants
     SOCKETIO_URL = securityScheme + '://' + server + ':' + str(port) + '?apiKey=' + apiKey
     SOCKETIO_RECCONECT_DELAY = int(config[configName]['ReconnectDelay'])
     SOCKETIO_INITIAL_RECONNECT_DELAY = int(config[configName]['InitialReconnectDelay'])
@@ -61,7 +63,7 @@ except Exception as e:
     beep(3, 1)
     exit(1)
 
-# pin setup
+# Pin setup
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PIN_SHUTDOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(PIN_PIEZO, GPIO.OUT)
@@ -84,24 +86,24 @@ def connect_error(data):
 def disconnect():
     print('Disconnected from the server.')
 
-# listener for shutdown button
+# Listener for shutdown button
 def shutdown_button_listener():
     pressed = False
     while True:
-        # button is pressed when pin is LOW
+        # Button is pressed when pin is LOW
         if not GPIO.input(PIN_SHUTDOWN_BUTTON):
             if not pressed:
                 print('Shutting down...')
                 sio.disconnect()
                 beep(1, 1)
-                # must be run as superuser!!!
+                # Must be run as superuser!!!
                 subprocess.call(['shutdown', '-h', 'now'], shell=False)
-        # button not pressed (or released)
+        # Button not pressed (or released)
         else:
             pressed = False
         time.sleep(0.1)
 
-# start listening for shutdown button press in separated thread
+# Start listening for shutdown button press in separated thread
 shutdown_button_thread = Thread(target=shutdown_button_listener, name='shutdownButton')
 shutdown_button_thread.start()
 
@@ -120,6 +122,9 @@ while canConnect == False:
 # Define the serial port and settings
 ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
 
+# Wait for 1 second
+time.sleep(1)
+
 while True:
     try:
         # Read data from the serial port
@@ -135,7 +140,7 @@ while True:
                 latitude = msg.latitude
                 longitude = msg.longitude
                 speed_knots = msg.spd_over_grnd
-                timestamp = msg.datetime.utcnow().isoformat()
+                timestamp = msg.datetime.now(timezone.utc).isoformat()
                 
                 # Convert speed from knots to km/h
                 speed_kmph = float(speed_knots) * 1.852  # 1 knot = 1.852 km/h
