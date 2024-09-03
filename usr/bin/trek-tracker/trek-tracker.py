@@ -14,7 +14,6 @@ SOCKETIO_URL = ''
 SOCKETIO_RECCONECT_DELAY = 1
 SOCKETIO_INITIAL_RECONNECT_DELAY = 10
 # Pins
-PIN_SHUTDOWN_BUTTON = 5     # On/Off pin
 PIN_PIEZO = 40      # Piezo pin
 # Other
 SERIAL_PORT = '/dev/serial0'
@@ -65,7 +64,6 @@ except Exception as e:
 
 # Pin setup
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(PIN_SHUTDOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(PIN_PIEZO, GPIO.OUT)
 
 # Socket.IO server
@@ -85,27 +83,6 @@ def connect_error(data):
 @sio.event
 def disconnect():
     print('Disconnected from the server.')
-
-# Listener for shutdown button
-def shutdown_button_listener():
-    pressed = False
-    while True:
-        # Button is pressed when pin is LOW
-        if not GPIO.input(PIN_SHUTDOWN_BUTTON):
-            if not pressed:
-                print('Shutting down...')
-                sio.disconnect()
-                beep(1, 1)
-                # Must be run as superuser!!!
-                subprocess.call(['shutdown', '-h', 'now'], shell=False)
-        # Button not pressed (or released)
-        else:
-            pressed = False
-        time.sleep(0.1)
-
-# Start listening for shutdown button press in separated thread
-shutdown_button_thread = Thread(target=shutdown_button_listener, name='shutdownButton')
-# shutdown_button_thread.start()
 
 beep(1, 0.25)
 time.sleep(1)
