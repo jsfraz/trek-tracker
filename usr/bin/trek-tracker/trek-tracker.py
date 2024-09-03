@@ -105,7 +105,7 @@ def shutdown_button_listener():
 
 # Start listening for shutdown button press in separated thread
 shutdown_button_thread = Thread(target=shutdown_button_listener, name='shutdownButton')
-shutdown_button_thread.start()
+# shutdown_button_thread.start()
 
 beep(1, 0.25)
 time.sleep(1)
@@ -126,6 +126,7 @@ ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
 time.sleep(1)
 
 while True:
+    '''
     try:
         # Read data from the serial port
         data = ser.readline().decode('utf-8').strip()
@@ -153,6 +154,6 @@ while True:
             
         else:
             print('No data!')
-
     except Exception as e:
         print('Error:', e)
+    '''
