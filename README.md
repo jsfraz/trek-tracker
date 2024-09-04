@@ -21,20 +21,13 @@ sudo dpkg -i trek-tracker-1.0.0.deb
 
 Serial console will be configured during installation.
 
-<!--
-## Manual serial console settings
 
-```bash
-sudo raspi-config
-```
+## Shield
 
-```bash
-Interfacing Options
-Serial Port
-Would you like a login shell to be accessible over serial?
-No
-Would you like the serial port hardware to be enabled?
-Yes
-Ok
-```
--->
+### Sketch
+
+![Sketch](shield.png "Sketch")
+
+### PCB
+
+![PCB](shield_pcb.png "PCB")

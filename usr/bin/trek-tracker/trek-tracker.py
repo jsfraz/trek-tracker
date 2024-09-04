@@ -5,8 +5,6 @@ from gnss_data import GNSSData
 import socketio
 import time
 import RPi.GPIO as GPIO
-import subprocess
-from threading import Thread
 import configparser
 
 # Server
@@ -128,6 +126,8 @@ while True:
                 # Send data to Socket.IO server
                 print(gnss_data.__dict__)
                 sio.emit('sendCurrent', gnss_data.__dict__)
+            else:
+                print('Not RMC message')
             
         else:
             print('No data!')
