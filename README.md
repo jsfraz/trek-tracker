@@ -6,28 +6,18 @@ Trek tracker for tracking your motorcycles or whatever.
 
 - [Waveshare LC76G](https://www.waveshare.com/wiki/LC76G_GNSS_Module)
 
-## Installing
-
-Packages `python3` and `python3-pip` are required:
+## Building and installing
 
 ```bash
-sudo apt update
-sudo apt install python3 python3-pip
-```
-
-Install requirements, build and install the package.
-
-```bash
-pip3 install -r requirements.txt
 dpkg-deb -b . trek-tracker-1.0.0.deb
 sudo dpkg -i trek-tracker-1.0.0.deb
 ```
 
-Serial console will be configured during installation.
+Or you can download and install the package from [Releases](https://github.com/jsfraz/trek-tracker/releases).
 
 ### Power on/power off button
 
-For enabling powering off with the button you MUST add `dtoverlay=gpio-shutdown` in the end of `/boot/config.txt` file.
+To enable powering off with the button you MUST add `dtoverlay=gpio-shutdown` in the end of `/boot/config.txt` file.
 
 ## Shield
 
