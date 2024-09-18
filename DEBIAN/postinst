@@ -1,4 +1,6 @@
 #!/bin/bash
+# Install python dependencies
+sudo pip3 install pyserial pynmea2 python-socketio==4.6.1 configparser
 # Enable service
 sudo systemctl enable trek-tracker
 # Configure tracker (https://stackoverflow.com/a/3232082/19371130)
@@ -20,7 +22,7 @@ case "$response" in
         sudo reboot now
         ;;
     *)
-        echo Installation complete. Be sure to reboot for serial port to be correctly enabled.
+        echo Installation complete. Be sure to reboot for serial port to work properly.
         sudo systemctl start trek-tracker
         ;;
 esac
