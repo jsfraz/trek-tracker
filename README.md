@@ -25,6 +25,9 @@ sudo dpkg -i trek-tracker-1.0.0.deb
 
 Serial console will be configured during installation.
 
+### Power on/power off button
+
+For enabling powering off with the button you MUST add `dtoverlay=gpio-shutdown` in the end of `/boot/config.txt` file.
 
 ## Shield
 
