@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Current File",
+            "name": "Python Debugger",
             "type": "debugpy",
             "request": "launch",
             "program": "usr/bin/trek-tracker/trek-tracker.py",

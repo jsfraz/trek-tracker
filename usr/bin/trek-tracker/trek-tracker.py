@@ -101,7 +101,6 @@ ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=SERIAL_TIMEOUT)
 time.sleep(1)
 
 while True:
-    '''
     try:
         # Read data from the serial port
         data = ser.readline().decode('utf-8').strip()
@@ -126,11 +125,11 @@ while True:
                 # Send data to Socket.IO server
                 print(gnss_data.__dict__)
                 sio.emit('sendCurrent', gnss_data.__dict__)
+            '''
             else:
-                print('Not RMC message')
-            
+                print('No RMC message!')
+            '''
         else:
             print('No data!')
     except Exception as e:
         print('Error:', e)
-    '''

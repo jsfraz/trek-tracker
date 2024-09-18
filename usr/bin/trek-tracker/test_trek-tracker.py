@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 import socketio
 from gnss_data import GNSSData
+import serial
 
 def test_load_config():
     """Loads confing needed for connecting to server from .env file."""

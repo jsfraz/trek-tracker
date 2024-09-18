@@ -2,6 +2,10 @@
 
 Trek tracker for tracking your motorcycles or whatever.
 
+## Used GPS module
+
+- [Waveshare LC76G](https://www.waveshare.com/wiki/LC76G_GNSS_Module)
+
 ## Installing
 
 Packages `python3` and `python3-pip` are required:
