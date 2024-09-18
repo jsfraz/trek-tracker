@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 import socketio
 from gnss_data import GNSSData
+import serial
 
 def test_load_config():
     """Loads confing needed for connecting to server from .env file."""
@@ -13,9 +14,7 @@ def test_load_config():
     # Get project root path
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
     # Load envs
-    # TODO change to your .env
-    env_file = '.env.test'
-    # env_file = '.env.developement'
+    env_file = '.env.development'
     dotenv_path = os.path.join(project_root, env_file)
     load_dotenv(dotenv_path)
 

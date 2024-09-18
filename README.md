@@ -2,6 +2,10 @@
 
 Trek tracker for tracking your motorcycles or whatever.
 
+## Used GPS module
+
+- [Waveshare LC76G](https://www.waveshare.com/wiki/LC76G_GNSS_Module)
+
 ## Installing
 
 Packages `python3` and `python3-pip` are required:
@@ -21,20 +25,16 @@ sudo dpkg -i trek-tracker-1.0.0.deb
 
 Serial console will be configured during installation.
 
-<!--
-## Manual serial console settings
+### Power on/power off button
 
-```bash
-sudo raspi-config
-```
+For enabling powering off with the button you MUST add `dtoverlay=gpio-shutdown` in the end of `/boot/config.txt` file.
 
-```bash
-Interfacing Options
-Serial Port
-Would you like a login shell to be accessible over serial?
-No
-Would you like the serial port hardware to be enabled?
-Yes
-Ok
-```
--->
+## Shield
+
+### Sketch
+
+![Sketch](shield.png "Sketch")
+
+### PCB
+
+![PCB](shield_pcb.png "PCB")
