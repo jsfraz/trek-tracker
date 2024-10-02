@@ -1,6 +1,6 @@
 # trek-tracker
 
-Trek tracker for tracking your motorcycles or whatever.
+Tracker for the [Trek project](https://github.com/jsfraz/trek-server).
 
 ## Used GPS module
 
@@ -19,7 +19,15 @@ Or you can download and install the package from [Releases](https://github.com/j
 
 To enable powering off with the button you MUST add `dtoverlay=gpio-shutdown` in the end of `/boot/config.txt` file.
 
+## 3D printed case
+
+![1](case/Yuki%20250%20CSR/case.png "1")
+
+Model created in [Blender](https://www.blender.org/), snapshot captured using [MeshLab](https://www.meshlab.net/).
+
 ## Shield
+
+Created in [Fritzing](https://fritzing.org/).
 
 ### Sketch
 
@@ -27,4 +35,12 @@ To enable powering off with the button you MUST add `dtoverlay=gpio-shutdown` in
 
 ### PCB
 
-![PCB](shield_pcb.png "PCB")
+![PCB top](shield_pcb_top.png "PCB top")
+
+![PCB bottom](shield_pcb_bottom.png "PCB bottom")
+
+Screenshot from [PCBWay online gerber viewer](https://www.pcbway.com/project/OnlineGerberViewer.html).
+
+### Schema
+
+![Schema](shield_pcb_schema.png "Schema")
