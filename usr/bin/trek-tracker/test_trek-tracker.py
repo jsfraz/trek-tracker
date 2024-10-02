@@ -33,8 +33,8 @@ def test_load_config():
     # Constants
     global SOCKETIO_URL
     SOCKETIO_URL = securityScheme + '://' + server + ':' + str(port) + '?apiKey=' + apiKey
-    global SOCKETIO_RECCONECT_DELAY
-    SOCKETIO_RECCONECT_DELAY = int(os.getenv('RECONNECT_DELAY'))
+    global SOCKETIO_RECONNECT_DELAY
+    SOCKETIO_RECONNECT_DELAY = int(os.getenv('RECONNECT_DELAY'))
 
 def test_send_single_location():
     """Connects to server and pushes one location pseudo data."""
@@ -43,7 +43,7 @@ def test_send_single_location():
     test_load_config()
 
     # create client
-    sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
+    sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECONNECT_DELAY)
 
     # Connect
     sio.connect(SOCKETIO_URL)
@@ -66,7 +66,7 @@ def test_send_short_trip():
     test_load_config()
 
     # Create client
-    sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECCONECT_DELAY)
+    sio = socketio.Client(reconnection=True, reconnection_delay=SOCKETIO_RECONNECT_DELAY)
 
     # Connect
     sio.connect(SOCKETIO_URL)
