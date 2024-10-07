@@ -1,6 +1,13 @@
 # trek-tracker
 
-Tracker for the [Trek project](https://github.com/jsfraz/trek-server).
+Tracker for the Trek project.
+
+- [Server](https://github.com/jsfraz/trek-server)
+- [Client](https://github.com/jsfraz/trek-client)
+<!--
+- Visit an [instructable](TODO) to show how to build and configure the tracker.
+-->
+- [Wiki](https://github.com/jsfraz/trek-tracker/wiki)
 
 ## Used GPS module
 
