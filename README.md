@@ -1,6 +1,13 @@
 # trek-tracker
 
-Tracker for the [Trek project](https://github.com/jsfraz/trek-server).
+Tracker for the Trek project.
+
+- [Server](https://github.com/jsfraz/trek-server)
+- [Client](https://github.com/jsfraz/trek-client)
+<!--
+- Visit an [instructable](TODO) to show how to build and configure the tracker.
+-->
+- [Wiki](https://github.com/jsfraz/trek-tracker/wiki)
 
 ## Used GPS module
 
@@ -21,7 +28,7 @@ To enable powering off with the button you MUST add `dtoverlay=gpio-shutdown` in
 
 ## 3D printed case
 
-![1](case/Yuki%20250%20CSR/case.png "1")
+![1](cases/Yuki%20250%20CSR/case.png "1")
 
 Model created in [Blender](https://www.blender.org/), snapshot captured using [MeshLab](https://www.meshlab.net/).
 
@@ -31,16 +38,18 @@ Created in [Fritzing](https://fritzing.org/).
 
 ### Sketch
 
-![Sketch](shield.png "Sketch")
+![Sketch](images/shield.png "Sketch")
 
 ### PCB
 
-![PCB top](shield_pcb_top.png "PCB top")
+![PCB top](images/shield_pcb_top.png "PCB top")
 
-![PCB bottom](shield_pcb_bottom.png "PCB bottom")
+![PCB bottom](images/shield_pcb_bottom.png "PCB bottom")
 
 Screenshot from [PCBWay online gerber viewer](https://www.pcbway.com/project/OnlineGerberViewer.html).
 
+<!--
 ### Schema
 
-![Schema](shield_pcb_schema.png "Schema")
+![Schema](images/shield_pcb_schema.png "Schema")
+-->
