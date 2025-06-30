@@ -13,12 +13,6 @@ Tracker for the Trek project.
 
 - [Waveshare LC76G](https://www.waveshare.com/wiki/LC76G_GNSS_Module)
 
-Or you can download and install the package from [Releases](https://github.com/jsfraz/trek-tracker/releases).
-
-### Power on/power off button
-
-To enable powering off with the button you MUST add `dtoverlay=gpio-shutdown` in the end of `/boot/config.txt` file.
-
 ## 3D printed case
 
 ![1](cases/Yuki%20250%20CSR/case.png "1")
