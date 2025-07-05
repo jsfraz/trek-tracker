@@ -2,6 +2,9 @@
 
 Tracker for the Trek project.
 
+> [!TIP]
+> You can read more about this project on my [blog](https://blog.josefraz.cz/how-i-created-my-own-gps-tracking-device-for-motorcycle-trips/).
+
 - [Server](https://github.com/jsfraz/trek-server)
 - [Client](https://github.com/jsfraz/trek-client)
 <!--
